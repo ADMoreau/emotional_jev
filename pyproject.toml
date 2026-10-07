@@ -1,0 +1,31 @@
+[project]
+name = "facedecide"
+version = "0.0.1"
+description = "Video decision model for facial expressions: typed, calibrated answers in one pass"
+requires-python = ">=3.11"
+license = { text = "Code: Apache-2.0. Weights: separate non-commercial license (see MODEL_CARD)." }
+# Exact versions are pinned in requirements.lock (pip freeze of a working env).
+dependencies = [
+    "torch>=2.6",
+    "torchvision",
+    "transformers>=5.17,<6",   # Qwen3.5 support; Kev and Qev pin >=5.17
+    "peft>=0.21",
+    "safetensors",
+    "numpy",
+    "pyyaml",
+]
+
+[project.optional-dependencies]
+cuda = ["flash-linear-attention"]   # FLA kernels for Gated DeltaNet on GPU
+dev = ["pytest>=8"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]   # no install needed for tests

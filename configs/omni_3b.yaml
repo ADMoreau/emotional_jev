@@ -1,0 +1,56 @@
+# Training config for the CREMA-D decision model (python -m facedecide.train --config ...).
+seed: 0
+backbone:
+  name: Qwen/Qwen2.5-Omni-3B      # thinker only (talker unused)
+  revision: null                  # pin a commit hash before the first reported run
+  dtype: bfloat16
+  attn: sdpa                      # takes our additive block mask; FlashAttention 2 can't
+  gradient_checkpointing: false   # ~10 GB used of 80 GB at ~800 tokens/clip: recompute would only cost time
+lora:
+  rank: 16
+  alpha: 32
+  dropout: 0.05
+  targets: [q_proj, k_proj, v_proj, o_proj, gate_proj, up_proj, down_proj]
+head:
+  pointer_dim: 256
+data:
+  root: data/crema-d
+  protocol: 5fold                 # or emobox (not actor-disjoint; for comparison with arXiv 2603.11095)
+  dev_actors: 8                   # held out of the training folds for temperature fitting
+  emobox_dev_frac: 0.1
+  num_workers: 6                  # DataLoader processes preparing examples (Modal GPU functions have 8 CPUs)
+train:
+  variant: B                      # A: audio-visual only; B: random condition per clip (modality dropout)
+  epochs: 5                       # a ceiling: the best dev-probe checkpoint is calibrated and tested (fold 0 peaked ~3.7)
+  grad_accum: 8                   # clips per optimizer step
+  clips_per_forward: 8            # clips batched into one forward pass (padded rows): fewer, larger kernels
+  eval_batch: 8                   # clips per forward pass when scoring
+  lr_lora: 1.0e-4
+  lr_head: 1.0e-4                 # was 1e-3 before the head's inputs were RMS-normalized; grad norm ran away
+  lr_encoder: null                # encoder LoRA (lora.vision_targets / audio_targets); null = lr_lora
+  weight_decay: 0.0
+  warmup_frac: 0.03
+  warmup_min_steps: 20            # short runs still warm up (capped at a quarter of the run)
+  max_grad_norm: 1.0
+  dev_every: 200                  # optimizer steps between dev probes (~3 per epoch on a 5-fold split)
+  dev_probe_clips: 150            # fixed seeded sample of dev clips, across actors, every question type
+  dev_probe_conditions: [av, face, voice]
+  keep_best: true                 # select the checkpoint with the lowest dev-probe loss (per fold, dev only)
+  p_noul: 0.4
+  p_score: 0.5
+  log_every: 10
+  ckpt_every: 100
+video:
+  frames: 16
+  crop_px: 224
+audio:
+  sample_rate: 16000
+augment:                          # training clips only (never dev/calibration/test); one draw per clip and epoch
+  enabled: false                  # off for every run before omni3b-B5aug-f1
+  crop_scale: [0.8, 1.0]          # square zoom/shift crop of the face crop, resized back to crop_px
+  flip: 0.5                       # horizontal flip probability
+  color: 0.2                      # brightness / contrast / saturation factor in [1 - c, 1 + c]
+  speed: [0.9, 1.1]               # audio speed (frame rate rescaled with it to keep alignment)
+  gain_db: 6                      # uniform in [-g, g]
+  noise_p: 0.5                    # probability of white noise at an SNR drawn from noise_snr_db
+  noise_snr_db: [20, 40]

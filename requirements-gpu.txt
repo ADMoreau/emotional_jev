@@ -1,0 +1,17 @@
+# GPU environment (Modal image). Same versions as the tested CPU env (requirements.lock), CUDA torch wheels
+# (PyPI's Linux torch builds are CUDA). facenet-pytorch is installed separately with --no-deps: it pins an old
+# torchvision, and MTCNN only needs torchvision.ops.batched_nms.
+torch==2.14.1
+torchvision==0.29.1
+transformers==5.18.0
+tokenizers==0.23.2
+huggingface_hub==1.33.0
+accelerate==1.15.0
+peft==0.21.2
+safetensors==0.8.0
+numpy==2.5.2
+pillow==12.3.0
+PyYAML==6.0.3
+tqdm==4.70.1
+requests
+pytest==9.1.1

@@ -1,0 +1,9 @@
+facedecide
+Copyright 2026 the facedecide authors
+
+Portions of this software are derived from Kev (https://github.com/jaredpalmer/kev),
+Qev (https://github.com/loadchange/qev) and Valen (https://github.com/Liuziyu77/Valen),
+each licensed under the Apache License, Version 2.0. Modified files say so in their header.
+
+The Qwen3.5 backbone (https://huggingface.co/Qwen) is licensed under the Apache License,
+Version 2.0. Model weights released by this project carry a separate non-commercial license.

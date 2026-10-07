@@ -1,0 +1,57 @@
+{
+ "rule": "silent audio; no face in any frame; > 8 of 16 sampled frames black; WAV doesn't match the video (corr < 0.5); WAV starts > 0.1 s before the video; WAV byte-identical to another clip's",
+ "clips": {
+  "1006_TIE_HAP_XX": [
+   "WAV identical to 1006_TIE_NEU_XX"
+  ],
+  "1006_TIE_NEU_XX": [
+   "WAV identical to 1006_TIE_HAP_XX"
+  ],
+  "1013_WSI_DIS_XX": [
+   "WAV identical to 1013_WSI_SAD_XX"
+  ],
+  "1013_WSI_SAD_XX": [
+   "WAV identical to 1013_WSI_DIS_XX"
+  ],
+  "1017_IWW_ANG_XX": [
+   "WAV identical to 1017_IWW_FEA_XX"
+  ],
+  "1017_IWW_FEA_XX": [
+   "WAV identical to 1017_IWW_ANG_XX"
+  ],
+  "1035_IEO_DIS_HI": [
+   "WAV doesn't match the video (corr 0.13)"
+  ],
+  "1035_IEO_DIS_MD": [
+   "WAV doesn't match the video (corr 0.13)"
+  ],
+  "1047_IEO_FEA_LO": [
+   "WAV doesn't match the video (corr 0.30)"
+  ],
+  "1047_IEO_SAD_LO": [
+   "WAV doesn't match the video (corr 0.04)"
+  ],
+  "1048_IEO_FEA_LO": [
+   "WAV doesn't match the video (corr 0.09)"
+  ],
+  "1058_IEO_ANG_LO": [
+   "audio starts before the video"
+  ],
+  "1064_IEO_DIS_MD": [
+   "WAV doesn't match the video (corr 0.07)"
+  ],
+  "1064_TIE_SAD_XX": [
+   "WAV doesn't match the video (corr 0.07)"
+  ],
+  "1076_MTI_NEU_XX": [
+   "WAV doesn't match the video (corr 0.09)"
+  ],
+  "1076_MTI_SAD_XX": [
+   "silent audio",
+   "no face in any frame"
+  ],
+  "1080_TSI_DIS_XX": [
+   "WAV doesn't match the video (corr 0.50)"
+  ]
+ }
+}
