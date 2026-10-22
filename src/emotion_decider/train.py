@@ -70,6 +70,11 @@ def splits(cfg, fold, rows):
         dev = set(rng.sample(train, round(len(train) * cfg["data"]["emobox_dev_frac"])))
         return {"train": [c for c in train if c not in dev], "dev": sorted(dev),
                 "test": [c for c in eb["test"] if c not in exclude]}
+    if cfg["data"]["protocol"] == "all":   # the release model: every actor; dev actors only select and calibrate
+        actors = sorted({rows[c]["actor"] for c in usable})
+        dev_actors = set(rng.sample(actors, cfg["data"]["dev_actors"]))
+        return {"train": [c for c in usable if rows[c]["actor"] not in dev_actors],
+                "dev": [c for c in usable if rows[c]["actor"] in dev_actors], "test": []}
     raise ValueError(cfg["data"]["protocol"])
 
 
@@ -377,6 +382,8 @@ def train(cfg, fold, out, model=None, processor=None, max_steps=None, limit_clip
     (out / "calibration.json").write_text(json.dumps(temps, indent=1))
     results = {"temperatures": temps, "selected_step": selected, "total_steps": state["step"]}
     for split, preds in (("dev", dev), ("test", None)):
+        if split == "test" and not sp["test"]:   # protocol "all" has no test set
+            continue
         if preds is None:
             log(f"scoring {split}")
             preds = predict(model, processor, rows, sp[split], root, temperatures=temps, num_workers=workers,

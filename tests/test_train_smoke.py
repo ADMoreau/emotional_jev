@@ -147,3 +147,23 @@ def test_best_dev_checkpoint_is_the_one_tested(processor, tmp_path):
     assert res["selected_step"] == best["step"] and res["total_steps"] == 4
     meta = json.loads((out / "best" / "decision.json").read_text())
     assert meta["step"] == best["step"] and meta["loss"] == pytest.approx(best["dev_loss"])
+
+
+def test_all_actor_protocol_trains_without_a_test_set(processor, tmp_path):
+    """protocol "all" (the release model): every usable clip is train or dev, dev actors are held out whole, and
+    the run calibrates on dev and writes no test predictions."""
+    import json as _json
+    from emotion_decider.train import load_rows, splits
+    cfg = smoke_cfg()
+    cfg["data"]["protocol"] = "all"
+    rows = load_rows(cfg["data"]["root"])
+    sp = splits(cfg, 0, rows)
+    exclude = set(_json.load(open(Path(CONFIG).parents[0] / "splits" / "crema_d_exclude.json"))["clips"])
+    assert sorted(sp["train"] + sp["dev"]) == sorted(c for c in rows if c not in exclude) and sp["test"] == []
+    dev_actors = {rows[c]["actor"] for c in sp["dev"]}
+    assert len(dev_actors) == cfg["data"]["dev_actors"] and not dev_actors & {rows[c]["actor"] for c in sp["train"]}
+    out = tmp_path / "all"
+    res = train(cfg, 0, out, model=tiny_model(processor), processor=processor, max_steps=1, limit_clips=4,
+                eval_limit=2, log=lambda *_: None)
+    assert "test" not in res and "dev" in res and (out / "calibration.json").exists()
+    assert not (out / "predictions_test.jsonl").exists()

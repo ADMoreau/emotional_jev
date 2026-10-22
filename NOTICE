@@ -7,9 +7,10 @@ Portions of this software are derived from Kev (https://github.com/jaredpalmer/k
 Qev (https://github.com/loadchange/qev) and Valen (https://github.com/Liuziyu77/Valen),
 each licensed under the Apache License, Version 2.0. Modified files say so in their header.
 
-The backbone, Qwen2.5-Omni-3B (https://huggingface.co/Qwen/Qwen2.5-Omni-3B), is licensed under the
-Qwen Research License (non-commercial research use). Model weights released by this project are
-derived from it and carry the same terms.
+Built with Qwen. Qwen is licensed under the Qwen RESEARCH LICENSE AGREEMENT, Copyright (c) Alibaba Cloud.
+All Rights Reserved. The backbone is Qwen2.5-Omni-3B (https://huggingface.co/Qwen/Qwen2.5-Omni-3B, commit
+f75b40e3da2003cdd6e1829b1f420ca70797c34e), used for non-commercial research only. Model weights released by
+this project (LoRA adapters and a decision head trained on top of it) are derivative works under the same terms.
 
 CREMA-D (https://github.com/CheyneyComputerScience/CREMA-D) is licensed under the Open Database
 License (ODbL). This repository contains no CREMA-D media or labels, only clip and actor IDs.

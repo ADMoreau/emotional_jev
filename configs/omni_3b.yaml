@@ -2,7 +2,7 @@
 seed: 0
 backbone:
   name: Qwen/Qwen2.5-Omni-3B      # thinker only (talker unused)
-  revision: null                  # pin a commit hash before the first reported run
+  revision: f75b40e3da2003cdd6e1829b1f420ca70797c34e   # the only snapshot every run so far used (Hub main, 2026-10)
   dtype: bfloat16
   attn: sdpa                      # takes our additive block mask; FlashAttention 2 can't
   gradient_checkpointing: false   # ~10 GB used of 80 GB at ~800 tokens/clip: recompute would only cost time
@@ -15,7 +15,7 @@ head:
   pointer_dim: 256
 data:
   root: data/crema-d
-  protocol: 5fold                 # or emobox (not actor-disjoint; for comparison with arXiv 2603.11095)
+  protocol: 5fold                 # emobox: not actor-disjoint; all: release model (every actor, 8 dev, no test)
   dev_actors: 8                   # held out of the training folds for temperature fitting
   emobox_dev_frac: 0.1
   num_workers: 6                  # DataLoader processes preparing examples (Modal GPU functions have 8 CPUs)

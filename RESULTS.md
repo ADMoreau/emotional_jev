@@ -92,3 +92,13 @@ AV +2.2 (+442 / -282, p<0.001); fear 0.722 -> 0.775, disgust 0.814 -> 0.869 (bot
 happiness +0.9, sadness 0.725 -> 0.706 (p=0.12). Face +2.2, voice +4.1 (both p<0.001). Fold 1's neutral drop (-11.3)
 does not recur in the pool. Selection caveat: the recipe was chosen from fold-1 test results (two screens); folds 0, 2,
 3, 4 alone give AV 0.857, so the headline does not rest on fold 1. Fold 0 of the LM-only row used the 6-epoch schedule.
+
+### Release model, all actors (2026-10-22)
+
+`omni3b-B5aug-all` (candidate weights for EmotionDecider-AV-3B): config 2aed7c1f30d2 (backbone pinned to f75b40e3; adds
+`data.protocol` "all") + `data.protocol=all` + the omni3b-B5aug overrides. 83 training actors (6,775 clips), 8 dev actors
+(1009, 1015, 1023, 1040, 1041, 1045, 1059, 1072; 650 clips), no test set. Best dev step 3200/4235 (dev loss 0.777);
+T intended 1.26, perceived 1.03. `best/decision.pt` sha256 0145bb6c55afcccf..., 223 MB.
+Dev (sanity check only: the same actors chose the checkpoint and fitted the temperatures, so it is optimistic; the
+expected performance is the 5-fold result above): AV acc 0.891, ECE 0.033, NLL 0.284, perceived KL 0.269, agree 0.842;
+face 0.743; voice 0.785.
