@@ -45,7 +45,7 @@ Questions far outside these families are untested.
 
 ## Files
 
-- `decision.pt` (223 MB): LoRA adapters (language model, vision encoder, audio encoder; rank 16) and the pointer head.
+- `decision.safetensors` (222 MB): LoRA adapters (language model, vision encoder, audio encoder; rank 16) and the pointer head.
   The base weights are not included; they are loaded from the pinned Qwen2.5-Omni-3B commit.
 - `decision.json`: adapter configuration and training metadata.
 - `calibration.json`: per-question temperatures fitted on held-out actors.
@@ -53,7 +53,31 @@ Questions far outside these families are untested.
 
 ## Usage
 
-<!-- TODO: loading and answering example, once the inference helper exists. -->
+Install the code (`pip install git+https://github.com/ADMoreau/emotional_jev`), download this repository, then:
+
+```python
+from emotion_decider.inference import load, answer
+
+model = load("EmotionDecider-AV-3B")   # fetches the pinned Qwen2.5-Omni-3B base on first use; GPU if available
+emotions = ["anger", "disgust", "fear", "happiness", "neutral", "sadness"]
+questions = {
+    "intended": {"type": "choice", "instructions": "Which emotion was the actor portraying?",
+                 "criteria": {e: None for e in emotions}},
+    "perceived": {"type": "choice", "instructions": "How would most viewers read this clip?",
+                  "criteria": {e: None for e in emotions}},
+    "angry": {"type": "noul", "instructions": "Would viewers say this person sounds angry?"},
+    "intensity": {"type": "score", "instructions": "How strongly does emotion come through?",
+                  "criteria": ["no clear emotion", "mild", "clear", "intense"]},
+}
+out = answer(model, questions, frames=frames, fps=fps, audio=audio)
+out["answers"]["intended"]   # {"type": "choice", "choice": ..., "probabilities": {...}, "confidence": ...}
+```
+
+`frames` is a `[T, H, W, 3]` uint8 array of face crops (training used 16 frames at 224 px, a square box about 1.3x
+the detected face; `scripts/extract_faces.py` with `emotion_decider/faces.py` is the training pipeline), `fps` the rate at which those
+frames were sampled, and `audio` float32 16 kHz mono over the same time span. Pass only `frames` (with `fps`) or only
+`audio` for face-only or voice-only input. Question ids `intended`, `perceived`, `noul` and `intensity` use the
+temperatures fitted for those question families; other ids use their type's default.
 
 ## Results
 
