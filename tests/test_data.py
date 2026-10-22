@@ -4,8 +4,8 @@ import csv
 import numpy as np
 import pytest
 
-from facedecide.crema import actor_folds, parse_clip, vote_distribution
-from facedecide.faces import crop, fill_missing, sample_indices, square_track
+from emotion_decider.crema import actor_folds, parse_clip, vote_distribution
+from emotion_decider.faces import crop, fill_missing, sample_indices, square_track
 
 
 def test_parse_clip():
@@ -74,7 +74,7 @@ def test_sample_indices_within_window():
 def test_packed_clip_decodes_identically(tmp_path, condition):
     import shutil
     from pathlib import Path
-    from facedecide.dataset import load_media, pack
+    from emotion_decider.dataset import load_media, pack
     clip, src = "1001_DFA_ANG_XX", Path("data/crema-d")
     # a root holding only the packed file: load_media must not touch the separate files
     (tmp_path / "derived" / "packed").mkdir(parents=True)

@@ -1,4 +1,4 @@
-"""Run facedecide on Modal (structure follows Kev's modal_app.py, Apache-2.0).
+"""Run emotion_decider on Modal (structure follows Kev's modal_app.py, Apache-2.0).
 
     modal run modal_app.py::data                                   # CPU: CREMA-D -> crops, targets, manifests (once)
     modal run modal_app.py::smoke                                  # GPU: real Omni-3B, 2 train steps + 4-clip eval
@@ -23,7 +23,7 @@ GPU = os.environ.get("FACEDECIDE_GPU", "A100-80GB")
 DATA, HF, RUNS = "/vol/data", "/vol/hf", "/vol/runs"
 CREMA_D = "https://github.com/CheyneyComputerScience/CREMA-D.git"
 
-app = modal.App("facedecide")
+app = modal.App("emotion-decider")
 image = (
     modal.Image.debian_slim(python_version="3.12")
     .apt_install("ffmpeg", "git", "git-lfs")
@@ -106,7 +106,7 @@ def train_fold(fold: int, name: str, overrides: list[str], max_steps: int = 0, l
                eval_limit: int = 0):
     _link_data()
     import torch
-    from facedecide.train import load_config, train
+    from emotion_decider.train import load_config, train
     cfg = load_config("configs/omni_3b.yaml", overrides)
     torch.manual_seed(cfg["seed"])
     res = train(cfg, fold, f"{RUNS}/{name}", max_steps=max_steps or None, limit_clips=limit_clips or None,
@@ -119,7 +119,7 @@ def train_fold(fold: int, name: str, overrides: list[str], max_steps: int = 0, l
 @app.function(image=image, gpu=GPU, cpu=8, memory=65536, timeout=6 * 3600, volumes=GPU_VOLUMES)
 def zero_shot(fold: int, name: str, calibrate: bool = True, limit_clips: int = 0):
     _link_data()
-    cmd = f"python -m facedecide.zeroshot --config configs/omni_3b.yaml --fold {fold} --out {RUNS}/{name}"
+    cmd = f"python -m emotion_decider.zeroshot --config configs/omni_3b.yaml --fold {fold} --out {RUNS}/{name}"
     cmd += " --calibrate" * calibrate + (f" --limit_clips {limit_clips}" if limit_clips else "")
     _sh(cmd)
     runs_vol.commit(); hf_vol.commit()

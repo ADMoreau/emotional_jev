@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from facedecide.metrics import accuracy, aurc, ece, f1, fit_temperature, kl, nll, one_hot, softmax, uar
+from emotion_decider.metrics import accuracy, aurc, ece, f1, fit_temperature, kl, nll, one_hot, softmax, uar
 
 
 def test_classification_metrics():

@@ -1,4 +1,4 @@
-# Training config for the CREMA-D decision model (python -m facedecide.train --config ...).
+# Training config for the CREMA-D decision model (python -m emotion_decider.train --config ...).
 seed: 0
 backbone:
   name: Qwen/Qwen2.5-Omni-3B      # thinker only (talker unused)

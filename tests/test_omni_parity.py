@@ -11,7 +11,7 @@ import pytest
 import torch
 from transformers import Qwen2_5OmniThinkerConfig, Qwen2_5OmniThinkerForConditionalGeneration
 
-from facedecide.omni import Branch, PointerHead, encode_clip, packed_hidden, readout, row_hidden
+from emotion_decider.omni import Branch, PointerHead, encode_clip, packed_hidden, readout, row_hidden
 
 ATOL = 1e-5
 
@@ -124,7 +124,7 @@ def test_mask_matters(processor, thinker):
 def test_batched_clips_match_one_at_a_time(processor, thinker):
     """Several clips (mixed conditions, so different lengths and encoders) in one padded forward pass give the
     same branch hidden states as one clip per pass, in any batch order."""
-    from facedecide.omni import packed_hidden_batch
+    from emotion_decider.omni import packed_hidden_batch
     clips = [make_clip(processor, "av", seed=0), make_clip(processor, "voice", seed=1),
              make_clip(processor, "face", seed=2), make_clip(processor, "av", seed=3, seconds=2)]
     bs = three_branches()
@@ -140,7 +140,7 @@ def test_batched_clips_match_one_at_a_time(processor, thinker):
 @pytest.mark.parametrize("side", [224, 168])   # 224: equal windows (batched path); 168: unequal (loop fallback)
 def test_batched_vision_attention_matches_loop(processor, side):
     """batch_vision_attention: same ViT features and same gradients as transformers' per-window loop."""
-    from facedecide.omni import batch_vision_attention
+    from emotion_decider.omni import batch_vision_attention
     loop, batched = tiny_thinker(), batch_vision_attention(tiny_thinker())   # same seed: same weights
     clip = make_clip(processor, "video", side=side)
     grads = []

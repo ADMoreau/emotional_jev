@@ -4,7 +4,7 @@ Row: {clip_id, actor, fold, emobox, condition, questions: {name: {type, instruct
       targets: {name: {probabilities: {key: p}}}}
 Excluded clips (configs/splits/crema_d_exclude.json) are left out. Phrasings and option order come from a seeded
 RNG per (seed, clip, condition), so a manifest is reproducible; training redraws them per epoch through
-facedecide.questions.make_questions. Output is under data/ (it holds labels).
+emotion_decider.questions.make_questions. Output is under data/ (it holds labels).
 
 Usage: python scripts/build_manifests.py [--seed 0]
 """
@@ -16,7 +16,7 @@ from collections import Counter
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
-from facedecide.questions import CONDITIONS, make_questions  # noqa: E402
+from emotion_decider.questions import CONDITIONS, make_questions  # noqa: E402
 
 REPO = Path(__file__).resolve().parents[1]
 ROOT = Path("data/crema-d")

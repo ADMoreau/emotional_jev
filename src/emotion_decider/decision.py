@@ -1,7 +1,7 @@
 """The trainable decision model: a frozen Qwen2.5-Omni thinker, LoRA on its language model, a pointer head.
 
 `logits(clip, questions)` is the scorer interface the evaluation shares with the zero-shot baseline
-(facedecide.zeroshot): one packed pass per clip, one logits vector per question, in each question's option order.
+(emotion_decider.zeroshot): one packed pass per clip, one logits vector per question, in each question's option order.
 """
 import json
 from pathlib import Path

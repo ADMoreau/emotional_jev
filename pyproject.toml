@@ -1,5 +1,5 @@
 [project]
-name = "facedecide"
+name = "emotion-decider"
 version = "0.1.0"
 description = "Audio-visual decision model for emotion (CREMA-D): typed, calibrated answers in one prefill pass"
 requires-python = ">=3.11"

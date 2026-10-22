@@ -3,7 +3,7 @@ import random
 
 import pytest
 
-from facedecide.questions import (LEVELS, NAMES, encode_question, intensity_distribution, make_questions,
+from emotion_decider.questions import (LEVELS, NAMES, encode_question, intensity_distribution, make_questions,
                                   option_keys, option_texts)
 
 ROW = {"clip_id": "1001_DFA_ANG_XX", "intended": "A", "perceived": {

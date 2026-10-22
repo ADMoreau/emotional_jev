@@ -15,7 +15,7 @@ from pathlib import Path
 import numpy as np
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
-from facedecide.dataset import pack  # noqa: E402
+from emotion_decider.dataset import pack  # noqa: E402
 
 ROOT = Path("data/crema-d")
 OUT = ROOT / "derived" / "packed"

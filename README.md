@@ -1,4 +1,4 @@
-# facedecide
+# EmotionDecider
 
 An open audio-visual **decision model** for emotion recognition. Given a short clip (face video and/or voice) and
 any number of typed questions, it returns calibrated probabilities over each question's answer options in **one
@@ -8,7 +8,7 @@ only.
 The request/response format follows the "System One" decision-model interface pattern (Choice, Noul and Score
 questions; a Jev-compatible interface). This project is independent and not affiliated with TypeSafe AI.
 
-**Status:** v1 trained and evaluated. Weights and model card are not released yet.
+**Status:** v1 trained and evaluated. Weights (`EmotionDecider-AV-3B`) and model card are not released yet.
 
 ## Results (v1)
 
@@ -53,7 +53,7 @@ Every run, ablation and caveat (including how the recipe was selected) is logged
 ## Repository layout
 
 ```
-src/facedecide/   omni.py (packed multi-branch prefill), decision.py (LoRA + pointer head), train.py,
+src/emotion_decider/   omni.py (packed multi-branch prefill), decision.py (LoRA + pointer head), train.py,
                   questions.py, augment.py, dataset.py, metrics.py, zeroshot.py, faces.py, crema.py
                   model.py: earlier Qwen3.5 (hybrid DeltaNet) path, kept as a reference
 scripts/          data preparation, Modal launchers, 5-fold runner

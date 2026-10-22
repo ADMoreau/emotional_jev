@@ -1,5 +1,5 @@
 {
- "source": "facedecide.crema.actor_folds(k=5, seed=0)",
+ "source": "emotion_decider.crema.actor_folds(k=5, seed=0)",
  "unit": "actor",
  "folds": [
   [

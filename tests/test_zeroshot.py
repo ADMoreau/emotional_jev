@@ -3,9 +3,9 @@ import random
 
 import torch
 
-from facedecide.omni import row_hidden
-from facedecide.questions import make_questions
-from facedecide.zeroshot import ZeroShot
+from emotion_decider.omni import row_hidden
+from emotion_decider.questions import make_questions
+from emotion_decider.zeroshot import ZeroShot
 from test_omni_parity import make_clip, processor, tiny_thinker  # noqa: F401  (processor is a fixture)
 
 ROW = {"clip_id": "x", "intended": "A", "perceived": {

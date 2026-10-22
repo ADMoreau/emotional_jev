@@ -61,7 +61,7 @@ def detector(min_face):
 
 def process(clip):
     from PIL import Image
-    from facedecide.faces import crop, decode, fill_missing, sample_indices, square_track
+    from emotion_decider.faces import crop, decode, fill_missing, sample_indices, square_track
     done = OUT / clip / "meta.json"
     if done.exists():
         return clip, "skip"

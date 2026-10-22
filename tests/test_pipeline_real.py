@@ -6,9 +6,9 @@ from pathlib import Path
 import pytest
 import torch
 
-from facedecide.dataset import load_media
-from facedecide.omni import encode_clip, packed_hidden, row_hidden
-from facedecide.questions import delimiter_ids, encode_question
+from emotion_decider.dataset import load_media
+from emotion_decider.omni import encode_clip, packed_hidden, row_hidden
+from emotion_decider.questions import delimiter_ids, encode_question
 
 MANIFEST = Path("data/crema-d/derived/manifest_seed0.jsonl")
 pytestmark = pytest.mark.skipif(not MANIFEST.exists(), reason="CREMA-D manifest not built")

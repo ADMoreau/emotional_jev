@@ -29,7 +29,7 @@ import numpy as np
 
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "scripts"))
-APP, RUNS_VOLUME, CONDITIONS = "facedecide", "facedecide-runs", ("av", "face", "voice")
+APP, RUNS_VOLUME, CONDITIONS = "emotion-decider", "facedecide-runs", ("av", "face", "voice")
 METRICS = [("intended", "acc"), ("intended", "uar"), ("intended", "f1_macro"), ("intended", "ece"), ("intended", "nll"),
            ("perceived", "kl"), ("perceived", "agree_majority"), ("noul", "brier"), ("intensity", "score_mae")]
 

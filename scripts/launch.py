@@ -16,7 +16,7 @@ import time
 
 import modal
 
-APP = "facedecide"
+APP = "emotion-decider"
 
 
 def spawn(fn, *args, **kwargs):

@@ -5,8 +5,8 @@ from pathlib import Path
 import numpy as np
 import pytest
 
-from facedecide.augment import augment_media
-from facedecide.train import load_config
+from emotion_decider.augment import augment_media
+from emotion_decider.train import load_config
 
 CFG = load_config(Path(__file__).resolve().parents[1] / "configs" / "omni_3b.yaml")["augment"]
 HAVE_DATA = Path("data/crema-d/derived/targets.jsonl").exists()
@@ -48,7 +48,7 @@ def test_single_modality_conditions():
 @pytest.mark.skipif(not HAVE_DATA, reason="CREMA-D not built")
 def test_questions_identical_and_eval_never_augmented():
     from transformers import AutoProcessor
-    from facedecide.train import Examples, Format, load_rows, predict  # noqa: F401
+    from emotion_decider.train import Examples, Format, load_rows, predict  # noqa: F401
     root = "data/crema-d"
     rows = load_rows(root)
     clip = sorted(rows)[0]

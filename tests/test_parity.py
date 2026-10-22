@@ -10,7 +10,7 @@ import pytest
 import torch
 from transformers import Qwen3_5Config, Qwen3_5Model
 
-from facedecide.model import Branch, PointerHead, State, branch_hidden, encode_state, readout, row_hidden
+from emotion_decider.model import Branch, PointerHead, State, branch_hidden, encode_state, readout, row_hidden
 
 VIDEO, V_START, V_END, IMAGE = 250, 251, 252, 253
 Q, OPT, END_OPT, DECIDE = 241, 242, 243, 244

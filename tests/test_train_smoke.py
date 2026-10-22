@@ -5,8 +5,8 @@ from pathlib import Path
 import pytest
 import torch
 
-from facedecide.decision import DecisionModel
-from facedecide.train import load_config, train
+from emotion_decider.decision import DecisionModel
+from emotion_decider.train import load_config, train
 
 pytestmark = pytest.mark.skipif(not Path("data/crema-d/derived/targets.jsonl").exists(), reason="CREMA-D not built")
 CONFIG = Path(__file__).resolve().parents[1] / "configs" / "omni_3b.yaml"
@@ -125,7 +125,7 @@ def test_loss_decreases_when_overfitting_one_clip(processor, tmp_path, monkeypat
     20 steps suffice. (Under per-epoch reshuffling the tiny model also learns option content, but needs ~90
     steps: P(correct) went 0.17 -> 0.92 in a direct check; too slow for the suite.)"""
     import random
-    import facedecide.train as T
+    import emotion_decider.train as T
     fixed = T.make_questions
     monkeypatch.setattr(T, "make_questions", lambda row, cond, rng, **kw: fixed(row, cond, random.Random(0), **kw))
     cfg = smoke_cfg(lr_lora=3e-3, lr_head=3e-2, epochs=20, grad_accum=1, variant="A", p_noul=0.0, p_score=0.0)

@@ -3,7 +3,7 @@ import math
 
 import torch
 
-from facedecide.model import PointerHead
+from emotion_decider.model import PointerHead
 
 
 def test_head_is_scale_invariant_and_starts_near_chance():

@@ -5,7 +5,7 @@ letter..." — then `<|im_end|>\\n<|im_start|>assistant\\n`; the option logits a
 letters A, B, ... at that last position. All questions about a clip share one packed pass (same block mask and
 positions as the decision model), so this costs what the decision model costs.
 
-    python -m facedecide.zeroshot --config configs/omni_3b.yaml --fold 0 --out runs/zs-f0 [--calibrate]
+    python -m emotion_decider.zeroshot --config configs/omni_3b.yaml --fold 0 --out runs/zs-f0 [--calibrate]
 """
 import argparse
 import json

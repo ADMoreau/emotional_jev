@@ -15,7 +15,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
-from facedecide.crema import actor_folds, load_ratings, parse_clip, vote_distribution  # noqa: E402
+from emotion_decider.crema import actor_folds, load_ratings, parse_clip, vote_distribution  # noqa: E402
 
 REPO = Path(__file__).resolve().parents[1]
 
@@ -45,7 +45,7 @@ def main():
     splits = REPO / "configs" / "splits"
     splits.mkdir(parents=True, exist_ok=True)
     folds = actor_folds(root / "VideoDemographics.csv", k=5, seed=0)
-    json.dump({"source": "facedecide.crema.actor_folds(k=5, seed=0)", "unit": "actor", "folds": folds},
+    json.dump({"source": "emotion_decider.crema.actor_folds(k=5, seed=0)", "unit": "actor", "folds": folds},
               open(splits / "crema_d_5fold.json", "w"), indent=1)
     print("folds (actors):", [len(f) for f in folds], "clips:",
           [sum(parse_clip(c)["actor"] in set(f) for c in clips) for f in folds])

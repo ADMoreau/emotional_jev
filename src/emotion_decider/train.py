@@ -1,6 +1,6 @@
 """Train, calibrate and evaluate the decision model on CREMA-D.
 
-    python -m facedecide.train --config configs/omni_3b.yaml --fold 0 --out runs/omni3b-f0 [--max_steps N]
+    python -m emotion_decider.train --config configs/omni_3b.yaml --fold 0 --out runs/omni3b-f0 [--max_steps N]
 
 Splits (always without the exclusion list): protocol "5fold" tests on one actor-disjoint fold and holds out
 `dev_actors` of the remaining actors for temperature fitting; protocol "emobox" uses EmoBox fold 1 (random by
