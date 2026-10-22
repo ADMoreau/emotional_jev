@@ -1,22 +1,22 @@
 [project]
 name = "facedecide"
-version = "0.0.1"
-description = "Video decision model for facial expressions: typed, calibrated answers in one pass"
+version = "0.1.0"
+description = "Audio-visual decision model for emotion (CREMA-D): typed, calibrated answers in one prefill pass"
 requires-python = ">=3.11"
-license = { text = "Code: Apache-2.0. Weights: separate non-commercial license (see MODEL_CARD)." }
+license = { text = "Code: Apache-2.0. Weights: Qwen Research License (non-commercial); see NOTICE." }
 # Exact versions are pinned in requirements.lock (pip freeze of a working env).
 dependencies = [
     "torch>=2.6",
     "torchvision",
-    "transformers>=5.17,<6",   # Qwen3.5 support; Kev and Qev pin >=5.17
+    "transformers>=5.17,<6",
     "peft>=0.21",
     "safetensors",
     "numpy",
+    "pillow",
     "pyyaml",
 ]
 
 [project.optional-dependencies]
-cuda = ["flash-linear-attention"]   # FLA kernels for Gated DeltaNet on GPU
 dev = ["pytest>=8"]
 
 [build-system]
